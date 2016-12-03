@@ -1,0 +1,6 @@
+framework module Pods_ProjectSense {
+  umbrella header "Pods-ProjectSense-umbrella.h"
+
+  export *
+  module * { export * }
+}
