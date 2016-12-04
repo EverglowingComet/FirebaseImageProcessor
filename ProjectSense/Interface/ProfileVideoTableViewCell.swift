@@ -32,7 +32,7 @@ class ProfileVideoTableViewCell: UITableViewCell {
 		playerLayer?.frame = self.playerView.bounds
 	}
 	
-	public func setVideo(avPlayer: AVPlayer?) {
+	open func setVideo(_ avPlayer: AVPlayer?) {
 		self.playerView.backgroundColor = UIColor.lightGray
 		avPlayer?.pause()
 		

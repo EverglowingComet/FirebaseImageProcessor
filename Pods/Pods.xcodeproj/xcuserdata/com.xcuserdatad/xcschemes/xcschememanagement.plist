@@ -6,43 +6,43 @@
 	<dict>
 		<key>Koloda.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Pods-ProjectSense.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>SCRecorder.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>4</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>pop.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0C99345BE410BF985A79B905010DD5FD</key>
+		<key>0CD012813F4D9B66B17C399B35AD8EDC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>20151774CE2F5FA6B8126D4F5ED1C5FE</key>
+		<key>2692A60CA9509B2E2A543556E170DCB4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9BDD0E42347ED8EDEA19928B85B79254</key>
+		<key>7B52D5384046A99C73F24B923E52428C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CEA920A850EC63C915AA1D3509FB71EE</key>
+		<key>C45290004E0078130C91A71711094467</key>
 		<dict>
 			<key>primary</key>
 			<true/>

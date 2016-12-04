@@ -35,7 +35,7 @@ class ProfileTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    class func cellHeight(count: Int) -> CGFloat {
+    class func cellHeight(_ count: Int) -> CGFloat {
         return CGFloat(20 + ContentHeight * count + 20 + 1)
     }
     
@@ -89,7 +89,7 @@ class ProfileTableViewCell: UITableViewCell {
         self.categoryLabel.text = name
     }
     
-    func setCategoryContent(title: String, value: String, index: Int) {
+    func setCategoryContent(_ title: String, value: String, index: Int) {
         var contentTitleLabel: UILabel!
         var contentLabel: UILabel!
         

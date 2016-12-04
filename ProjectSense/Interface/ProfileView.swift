@@ -13,7 +13,7 @@ enum SortDirection: Int {
 	case up = 0
 	case down
 	
-	func getRowCount(profile: UserProfile?) -> [Int] {
+	func getRowCount(_ profile: UserProfile?) -> [Int] {
 		let imgCount: Int = (profile != nil ? profile!.imageCount() : 0)
 		let videoCount: Int = (profile!.videoURL == nil ? 0 : 1)
 		if self == .up {
@@ -47,7 +47,7 @@ enum SoundMute: Int {
 	case on = 0
 	case off
 	
-	mutating func changeMute(avPlayer: AVPlayer) -> String {
+	mutating func changeMute(_ avPlayer: AVPlayer) -> String {
 		if self == .on {
 			self = .off
 			avPlayer.isMuted = false
@@ -203,7 +203,7 @@ class ProfileView : UIView {
 	}
 	
 	@IBAction func onMute(_ sender: Any) {
-		let imageName: String = self.soundMute.changeMute(avPlayer: self.videoPlayer!)
+		let imageName: String = self.soundMute.changeMute(self.videoPlayer!)
 		self.btnMute.setImage(UIImage(named: imageName), for: .normal)
 	}
 }
@@ -226,7 +226,7 @@ extension ProfileView : UITableViewDataSource {
 	
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == self.profileImageTableView {
-			var counts : [Int] = self.sortDirection.getRowCount(profile: self.profile)
+			var counts : [Int] = self.sortDirection.getRowCount(self.profile)
 			return counts[section]
             
         } else if tableView == self.profileTableView {
@@ -242,13 +242,13 @@ extension ProfileView : UITableViewDataSource {
 			
 			if indexPath.section == imgCellSection {
 				let profileImageCell = tableView.dequeueReusableCell(withIdentifier: ProfileImageTableViewCell.ID) as! ProfileImageTableViewCell?
-				profileImageCell?.thumbImageView.image = self.profile?.image(index: indexPath.row)
+				profileImageCell?.thumbImageView.image = self.profile?.image(indexPath.row)
 				
 				return profileImageCell!
 				
 			} else {
 				let profileVideoCell = tableView.dequeueReusableCell(withIdentifier: ProfileVideoTableViewCell.ID) as! ProfileVideoTableViewCell?
-				profileVideoCell?.setVideo(avPlayer: self.videoPlayer)
+				profileVideoCell?.setVideo(self.videoPlayer)
 				
 				return profileVideoCell!
 			}
@@ -260,7 +260,7 @@ extension ProfileView : UITableViewDataSource {
             profileCell?.setCategoryName(self.profileCategoryName[index])
             profileCell?.setContentCount(contentCount)
             for i in 0 ..< contentCount {
-                profileCell?.setCategoryContent(title: self.profileCategoryContentName[index][i], value: self.profileCategoryContentValue[index][i], index: i)
+                profileCell?.setCategoryContent(self.profileCategoryContentName[index][i], value: self.profileCategoryContentValue[index][i], index: i)
             }
             
             return profileCell!
@@ -275,7 +275,7 @@ extension ProfileView : UITableViewDelegate {
         if tableView == self.profileImageTableView {
             return tableView.bounds.width
         } else if tableView == self.profileTableView {
-            return ProfileTableViewCell.cellHeight(count: self.profileCategoryContentCount[indexPath.row])
+            return ProfileTableViewCell.cellHeight(self.profileCategoryContentCount[indexPath.row])
         }
         
         return 0

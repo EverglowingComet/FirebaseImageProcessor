@@ -42,7 +42,7 @@ class ProfileViewController: UIViewController {
             
             let imageCount = 3 + i % 3
             for _ in 0 ..< imageCount {
-                userProfile.addImage(image: UIImage.init(named: "user_profile_image"))
+                userProfile.addImage(UIImage.init(named: "user_profile_image"))
             }
             
             self.userProfiles.append(userProfile)

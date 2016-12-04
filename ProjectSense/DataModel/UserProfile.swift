@@ -39,13 +39,13 @@ class UserProfile : NSObject {
         return self.images.count
     }
     
-    func addImage(image: UIImage?) {
+    func addImage(_ image: UIImage?) {
         if image != nil {
             self.images.append(image!)
         }
     }
     
-    func image(index: Int) -> UIImage? {
+    func image(_ index: Int) -> UIImage? {
         if index < 0 || index >= self.imageCount() {
             return nil
         }
