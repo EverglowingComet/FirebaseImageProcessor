@@ -29,6 +29,8 @@
 		F33562B11DEFAC8800BB9C7C /* sample.MOV in Resources */ = {isa = PBXBuildFile; fileRef = F33562B01DEFAC8800BB9C7C /* sample.MOV */; };
 		F33562B41DEFB2FE00BB9C7C /* ProfileVideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33562B21DEFB2FE00BB9C7C /* ProfileVideoTableViewCell.swift */; };
 		F33562B51DEFB2FE00BB9C7C /* ProfileVideoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F33562B31DEFB2FE00BB9C7C /* ProfileVideoTableViewCell.xib */; };
+		F35CEA401DF4894C0008362E /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35CEA3F1DF4894C0008362E /* Firebase.swift */; };
+		F35CEA421DF48DEB0008362E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F35CEA411DF48DEB0008362E /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		F33562B01DEFAC8800BB9C7C /* sample.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = sample.MOV; sourceTree = "<group>"; };
 		F33562B21DEFB2FE00BB9C7C /* ProfileVideoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVideoTableViewCell.swift; sourceTree = "<group>"; };
 		F33562B31DEFB2FE00BB9C7C /* ProfileVideoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileVideoTableViewCell.xib; sourceTree = "<group>"; };
+		F35CEA3F1DF4894C0008362E /* Firebase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Firebase.swift; sourceTree = "<group>"; };
+		F35CEA411DF48DEB0008362E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +129,7 @@
 				0AAA00A21DB5901F002BB4EE /* Main.storyboard */,
 				0AAA00A51DB5901F002BB4EE /* Assets.xcassets */,
 				0AAA00A71DB5901F002BB4EE /* LaunchScreen.storyboard */,
+				F35CEA411DF48DEB0008362E /* GoogleService-Info.plist */,
 				0AAA00AA1DB5901F002BB4EE /* Info.plist */,
 			);
 			path = ProjectSense;
@@ -151,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				6316AB5D1DE6017F005A62CC /* UserProfile.swift */,
+				F35CEA3F1DF4894C0008362E /* Firebase.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -313,6 +319,7 @@
 				0AAA00A61DB5901F002BB4EE /* Assets.xcassets in Resources */,
 				F33562B11DEFAC8800BB9C7C /* sample.MOV in Resources */,
 				95C2A0931DB95B7D007FD444 /* user_profile_image.png in Resources */,
+				F35CEA421DF48DEB0008362E /* GoogleService-Info.plist in Resources */,
 				0AAA00A41DB5901F002BB4EE /* Main.storyboard in Resources */,
 				6316AB6C1DE6017F005A62CC /* ProfileTableViewCell.xib in Resources */,
 			);
@@ -387,6 +394,7 @@
 				6316AB681DE6017F005A62CC /* UserProfile.swift in Sources */,
 				6316AB6B1DE6017F005A62CC /* ProfileTableViewCell.swift in Sources */,
 				6316AB6D1DE6017F005A62CC /* ProfileView.swift in Sources */,
+				F35CEA401DF4894C0008362E /* Firebase.swift in Sources */,
 				0AAA009D1DB5901F002BB4EE /* AppDelegate.swift in Sources */,
 				3027FB231DEA1460001E4071 /* TouchView.swift in Sources */,
 				6316AB691DE6017F005A62CC /* ProfileImageTableViewCell.swift in Sources */,

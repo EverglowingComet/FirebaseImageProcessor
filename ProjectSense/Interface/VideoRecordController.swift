@@ -130,7 +130,7 @@ class VideoRecordController: UIViewController {
 				return;
 			}
 			
-			if true { // testing code: save video to camera roll
+			if false { // testing code: save video to camera roll
 				PHPhotoLibrary.shared().performChanges({
 					PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: exportSession.outputUrl!)
 				}) { saved, error in
@@ -138,6 +138,11 @@ class VideoRecordController: UIViewController {
 						print("video saved sucessfully!")
 					}
 				}
+				
+			} else {
+				// upload file to firebase
+				let videoData = try? Data(contentsOf: exportSession.outputUrl!)
+				Firebase.uploadVideo(withData: videoData!, name: "video.mp4")
 			}
 		}
 	}

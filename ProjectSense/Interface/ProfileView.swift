@@ -50,12 +50,12 @@ enum SoundMute: Int {
 	mutating func changeMute(_ avPlayer: AVPlayer) -> String {
 		if self == .on {
 			self = .off
-			avPlayer.isMuted = false
+			avPlayer.isMuted = true
 			return "volumeOff"
 		}
 		
 		self = .on
-		avPlayer.isMuted = true
+		avPlayer.isMuted = false
 		return "volumeOn"
 	}
 }
@@ -280,7 +280,25 @@ extension ProfileView : UITableViewDelegate {
         
         return 0
     }
-    
+	
+	public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+		if scrollView != self.profileImageTableView {
+			return
+		}
+		
+		let visibledCells = self.profileImageTableView.visibleCells
+		for cell in visibledCells {
+			if cell is ProfileVideoTableViewCell {
+			//if cell.subjectType == ProfileVideoTableViewCell.self {
+				videoPlayer?.play()
+				break
+			} else {
+				videoPlayer?.pause()
+			}
+		}
+		
+	}
+	
     public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if scrollView != self.profileImageTableView {
             return
