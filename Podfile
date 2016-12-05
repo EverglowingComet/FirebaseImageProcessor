@@ -7,6 +7,7 @@ target 'ProjectSense' do
 
   # Pods for ProjectSense
   pod 'Koloda', :git => 'https://github.com/Yalantis/Koloda', :branch => 'swift-3'
+  pod 'MBProgressHUD'
   pod 'SCRecorder'
   pod 'Firebase/Core'
   pod 'Firebase/Storage'

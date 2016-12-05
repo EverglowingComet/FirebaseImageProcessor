@@ -13,6 +13,7 @@ class ProfileVideoTableViewCell: UITableViewCell {
 	static let ID = "ProfileVideoTableViewCellID"
 	
 	@IBOutlet weak var playerView: UIView!
+	@IBOutlet weak var activity: UIActivityIndicatorView!
 	
 	var playerLayer: AVPlayerLayer?
 	
@@ -30,6 +31,19 @@ class ProfileVideoTableViewCell: UITableViewCell {
 	override func layoutSubviews() {
 		playerView.frame = CGRect(x: 10, y: 10, width: self.frame.size.width - 20, height: self.frame.size.height - 20)
 		playerLayer?.frame = self.playerView.bounds
+		
+		activity.frame = CGRect(x: (self.frame.size.width - activity.frame.size.width)/2, y: (self.frame.size.height - activity.frame.size.height)/2,
+		                        width: activity.frame.size.width, height: activity.frame.size.height)
+	}
+	
+	open func showProgress(bShow: Bool) {
+		if bShow == true {
+			activity.isHidden = false
+			activity.startAnimating()
+		} else {
+			activity.stopAnimating()
+			activity.isHidden = true
+		}
 	}
 	
 	open func setVideo(_ avPlayer: AVPlayer?) {

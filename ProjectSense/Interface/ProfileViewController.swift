@@ -22,12 +22,6 @@ class ProfileViewController: UIViewController {
         self.navigationController?.navigationBar.barTintColor = UIColor.init(hex: 0x895EC0)
         self.navigationController?.title = "Sense"
         
-		
-    }
-	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		
 		self.userProfiles.removeAll()
 		
 		for i in 0 ..< 20 {
@@ -42,21 +36,21 @@ class ProfileViewController: UIViewController {
 			userProfile.about = String.init(format: "Photographer, dancer, and singer %d", i)
 			userProfile.name = String.init(format: "Name %d", i)
 			
-			if false { // read video from resource for testing mode
-				let path = Bundle.main.path(forResource: "sample", ofType: "MOV")
-				userProfile.videoURL = URL(fileURLWithPath: path!)
-				
-				// uploading video
-				//let videoData = try? Data(contentsOf: URL(fileURLWithPath: path!))
-				//Firebase.uploadVideo(withData: videoData!, name: "video.mp4")
-				
-			} else { // firebase video url
-				myGroup.enter()
-				Firebase.videoURL(withName: "video.mp4", complete: { (url) in
-					userProfile.videoURL = url
-					self.myGroup.leave()
-				})
-			}
+			//			if false { // read video from resource for testing mode
+			//				let path = Bundle.main.path(forResource: "sample", ofType: "MOV")
+			//				userProfile.videoURL = URL(fileURLWithPath: path!)
+			//
+			//				// uploading video
+			//				//let videoData = try? Data(contentsOf: URL(fileURLWithPath: path!))
+			//				//Firebase.uploadVideo(withData: videoData!, name: "video.mp4")
+			//
+			//			} else { // firebase video url
+			//				myGroup.enter()
+			//				Firebase.videoURL(withName: "video.mp4", complete: { (url) in
+			//					userProfile.videoURL = url
+			//					self.myGroup.leave()
+			//				})
+			//			}
 			
 			let imageCount = 3 + i % 3
 			for _ in 0 ..< imageCount {
@@ -66,16 +60,29 @@ class ProfileViewController: UIViewController {
 			self.userProfiles.append(userProfile)
 		}
 		
-		__dispatch_group_notify(self.myGroup, DispatchQueue.main, {() in
-			self.kolodaView.dataSource = self
-			self.kolodaView.delegate = self
-			self.kolodaView.reloadData()
-		})
+		//		__dispatch_group_notify(self.myGroup, DispatchQueue.main, {() in
+		self.kolodaView.dataSource = self
+		self.kolodaView.delegate = self
+		self.kolodaView.reloadData()
+		//		})
+
+    }
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		(self.kolodaView.viewForCard(at: self.kolodaView.currentCardIndex) as! ProfileView!).loadVideo()
 	}
 	
     override func viewDidLayoutSubviews() {
         self.kolodaView.reloadData()
     }
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		
+		(self.kolodaView.viewForCard(at: self.kolodaView.currentCardIndex) as! ProfileView!).pausePlayer()
+	}
 	
     @IBAction func OnFlipProfileView(_ sender: AnyObject) {
         let profileView = self.kolodaView.viewForCard(at: self.kolodaView.currentCardIndex) as! ProfileView?

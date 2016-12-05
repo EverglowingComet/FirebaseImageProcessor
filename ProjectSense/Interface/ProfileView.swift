@@ -15,7 +15,7 @@ enum SortDirection: Int {
 	
 	func getRowCount(_ profile: UserProfile?) -> [Int] {
 		let imgCount: Int = (profile != nil ? profile!.imageCount() : 0)
-		let videoCount: Int = (profile!.videoURL == nil ? 0 : 1)
+		let videoCount: Int = 1//(profile!.videoURL == nil ? 0 : 1)
 		if self == .up {
 			return [videoCount, imgCount]
 		}
@@ -187,12 +187,28 @@ class ProfileView : UIView {
         self.profileCategoryContentValue[2][2] = self.profile!.education!
         self.profileCategoryContentValue[3][0] = self.profile!.about!
 		
-		videoPlayer = AVPlayer(url: (self.profile?.videoURL)!)
-		NotificationCenter.default.addObserver(self, selector: #selector(onFinishedPlayer), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: videoPlayer?.currentItem)
-		
         self.profileImageTableView.reloadData()
         self.profileTableView.reloadData()
+		
+		self.profile?.videoURL = nil
+		
+		self.loadVideo()
     }
+	
+	func loadVideo() {
+		Firebase.videoURL(withName: "video.mp4", complete: { (url) in
+			self.profile?.videoURL = url
+			
+			self.videoPlayer = AVPlayer(url: (self.profile?.videoURL)!)
+			NotificationCenter.default.addObserver(self,
+			                                       selector: #selector(self.onFinishedPlayer),
+			                                       name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
+			                                       object: self.videoPlayer?.currentItem)
+			
+			self.profileImageTableView.reloadData()
+			self.profileTableView.reloadData()
+		})
+	}
 	
 	// MARK: - Button actions
 	@IBAction func onSortDirection(_ sender: Any) {
@@ -210,6 +226,10 @@ class ProfileView : UIView {
 
 // MARK: - AVPlayer observer
 extension ProfileView {
+	func pausePlayer() {
+		videoPlayer?.pause()
+	}
+	
 	func onFinishedPlayer() {
 		print("finished playing video")
 		videoPlayer?.pause()
@@ -248,7 +268,12 @@ extension ProfileView : UITableViewDataSource {
 				
 			} else {
 				let profileVideoCell = tableView.dequeueReusableCell(withIdentifier: ProfileVideoTableViewCell.ID) as! ProfileVideoTableViewCell?
-				profileVideoCell?.setVideo(self.videoPlayer)
+				if self.profile?.videoURL == nil {
+					profileVideoCell?.showProgress(bShow: true)
+				} else {
+					profileVideoCell?.showProgress(bShow: false)
+					profileVideoCell?.setVideo(self.videoPlayer)
+				}
 				
 				return profileVideoCell!
 			}
@@ -271,6 +296,39 @@ extension ProfileView : UITableViewDataSource {
 }
 
 extension ProfileView : UITableViewDelegate {
+	private func showBanner(bAnimate: Bool) {
+		if bAnimate == true {
+			videoPlayer?.pause()
+			
+			UIView.animate(withDuration: 0.3,
+			               animations: {
+							self.bottomContainerViewBottomConstraint.constant = -160
+							self.layoutIfNeeded()
+			}) { (finished: Bool) in
+				
+			}
+			
+		} else {
+			let visibledCells = self.profileImageTableView.visibleCells
+			for cell in visibledCells {
+				if cell is ProfileVideoTableViewCell {
+					videoPlayer?.play()
+					break
+				} else {
+					videoPlayer?.pause()
+				}
+			}
+			
+			UIView.animate(withDuration: 0.5,
+			               animations: {
+							self.bottomContainerViewBottomConstraint.constant = 0
+							self.layoutIfNeeded()
+			}) { (finished: Bool) in
+				
+			}
+		}
+	}
+	
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if tableView == self.profileImageTableView {
             return tableView.bounds.width
@@ -281,51 +339,23 @@ extension ProfileView : UITableViewDelegate {
         return 0
     }
 	
-	public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		if scrollView != self.profileImageTableView {
-			return
-		}
-		
-		let visibledCells = self.profileImageTableView.visibleCells
-		for cell in visibledCells {
-			if cell is ProfileVideoTableViewCell {
-			//if cell.subjectType == ProfileVideoTableViewCell.self {
-				videoPlayer?.play()
-				break
-			} else {
-				videoPlayer?.pause()
-			}
-		}
-		
-	}
-	
     public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if scrollView != self.profileImageTableView {
             return
         }
-        
-        UIView.animate(withDuration: 0.3,
-                       animations: {
-                        self.bottomContainerViewBottomConstraint.constant = -160
-                        self.layoutIfNeeded()
-        }) { (finished: Bool) in
-            
-        }
-        print("1")
+		
+		self.showBanner(bAnimate: true)
     }
-    
+	
+	public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+		if scrollView != self.profileImageTableView || decelerate == true {
+			return
+		}
+		
+		self.showBanner(bAnimate: false)
+	}
+	
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if scrollView != self.profileImageTableView {
-            return
-        }
-        
-        UIView.animate(withDuration: 0.5,
-                       animations: {
-                        self.bottomContainerViewBottomConstraint.constant = 0
-                        self.layoutIfNeeded()
-        }) { (finished: Bool) in
-            
-        }
-        print("2")
+		self.showBanner(bAnimate: false)
     }
 }

@@ -9,6 +9,7 @@
 import UIKit
 import SCRecorder
 import AVFoundation
+import MBProgressHUD
 import Photos
 
 class VideoRecordController: UIViewController {
@@ -16,6 +17,8 @@ class VideoRecordController: UIViewController {
     
     @IBOutlet weak var cameraPreview: TouchView!
     @IBOutlet weak var recordedTimeProgressView: UIProgressView!
+	
+	var hud: MBProgressHUD?
     
     var recorder: SCRecorder = SCRecorder()
     var updateTimer: Timer? = nil
@@ -43,13 +46,13 @@ class VideoRecordController: UIViewController {
     func setupRecorder() {
         self.recorder.previewView = self.cameraPreview
         
-        self.recorder.captureSessionPreset = AVCaptureSessionPresetHigh
+        self.recorder.captureSessionPreset = SCRecorderTools.bestCaptureSessionPresetCompatibleWithAllDevices()
         self.recorder.device = AVCaptureDevicePosition.front
         self.recorder.maxRecordDuration = CMTimeMake(6000, 1000)
         
         let videoConfiguration = self.recorder.videoConfiguration
         videoConfiguration.enabled = true
-        videoConfiguration.size = CGSize(width: 640, height: 640)
+        videoConfiguration.size = CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width)
         videoConfiguration.scalingMode = AVVideoScalingModeResizeAspectFill
         videoConfiguration.timeScale = 1
         videoConfiguration.sizeAsSquare = true
@@ -121,12 +124,16 @@ class VideoRecordController: UIViewController {
 		exportSession.delegate = self
 		exportSession.contextType = .auto
 		
+		hud = MBProgressHUD.showAdded(to: view, animated: true)
+		hud?.label.text = String(format: "Expert video now")
+		
 		exportSession.exportAsynchronously { [weak self] in
 			self?.recorder.session!.removeAllSegments()
 			self?.recordedTimeProgressView.progress = 0
 			
 			if let error = exportSession.error {
 				print("FAILED: \(error.localizedDescription)")
+				self?.hud?.hide(animated: true)
 				return;
 			}
 			
@@ -142,7 +149,10 @@ class VideoRecordController: UIViewController {
 			} else {
 				// upload file to firebase
 				let videoData = try? Data(contentsOf: exportSession.outputUrl!)
-				Firebase.uploadVideo(withData: videoData!, name: "video.mp4")
+				//Firebase.uploadVideo(withData: videoData!, name: "video.mp4")
+				Firebase.uploadVideo(withData: videoData!, name: "video.mp4", complete: { () in
+					self?.hud?.hide(animated: true)
+				})
 			}
 		}
 	}

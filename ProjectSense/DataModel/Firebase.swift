@@ -28,7 +28,7 @@ struct Firebase {
 		})
 	}
 	
-	static func uploadVideo(withData data: Data, name: String) {
+	static func uploadVideo(withData data: Data, name: String, complete: ((Void) -> Void)? = nil) {
 		let videoRef = Firebase.storageRef.child(name)
 		
 		videoRef.put(data, metadata: nil, completion: { (meta, error) in
@@ -37,10 +37,14 @@ struct Firebase {
 			} else {
 				print("uploading finished successfully to \(meta?.downloadURL())")
 			}
+			
+			if complete != nil {
+				complete!()
+			}
 		})
 	}
 	
-	static func videoURL(withName name: String, complete: @escaping (URL?) -> Swift.Void) {
+	static func videoURL(withName name: String, complete: @escaping ((URL?) -> Swift.Void)) {
 		let videoRef = Firebase.storageRef.child(name)
 		
 		videoRef.downloadURL { (url, error) in

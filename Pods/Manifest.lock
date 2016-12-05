@@ -46,6 +46,7 @@ PODS:
   - GTMSessionFetcher/Core (1.1.7)
   - Koloda (3.1.2):
     - pop (~> 1.0)
+  - MBProgressHUD (1.0.0)
   - pop (1.0.9)
   - SCRecorder (2.7.0)
 
@@ -55,6 +56,7 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - Koloda (from `https://github.com/Yalantis/Koloda`, branch `swift-3`)
+  - MBProgressHUD
   - SCRecorder
 
 EXTERNAL SOURCES:
@@ -80,9 +82,10 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
   Koloda: 5aee353329cd1605540f1215a4c1975481dc7a37
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   SCRecorder: bbb521dbc222908876ec9cd9156bbc8a893bed44
 
-PODFILE CHECKSUM: 52cf6ad2da7319b766d08768cf8521af534e72cf
+PODFILE CHECKSUM: 746633c8bab7ac144f204afc39c4038b39b0857b
 
 COCOAPODS: 1.0.1
